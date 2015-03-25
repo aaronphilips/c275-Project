@@ -41,7 +41,7 @@ TEAM_NAME = {
     1: "red"
 }
 # Create an 800x600 sized screen
-screen = pygame.display.set_mode([800, 600])
+screen = pygame.display.set_mode((1600, 900))
 class GUI(LayeredUpdates):
      # number of GUI instances
     num_instances = 0
@@ -62,6 +62,6 @@ class GUI(LayeredUpdates):
         self.screen_rect = screen_rect
     def load_level(self,filestr):
         background = pygame.image.load(filestr).convert()
-        background =pygame.transform.scale(background,(800,600))
-        #screen=pygame.display.set_mode(background)
-        screen.blit(background, [0, 0])
+        background =pygame.transform.scale(background,(1600,900))
+        rect= background.get_rect()
+        screen.blit(background, rect)

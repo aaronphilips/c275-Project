@@ -29,6 +29,12 @@ class BasicUnit(Sprite):
         self.attack_damage = None
         self.attack_speed = None
         self.range = None
+        self.image = None
+        self.rect = pygame.Rect(0, 0, SIZE, SIZE)
+        self._update_image()
+
+        if activate:
+            self.activate()
 
     # Activate or deactivate the unit (for death or spawning)
     def activate(self):
@@ -56,3 +62,25 @@ class BasicUnit(Sprite):
             return "BAM!"
         else:
             return
+    def _update_image(self):
+        """
+        Re-renders the unit's image.
+        """
+        # Pick out the right sprite depending on the team
+        subrect = pygame.Rect(self.team * SIZE,
+                              0,
+                              self.rect.w,
+                              self.rect.h)
+        try:
+            subsurf = self._base_image.subsurface(subrect)
+        except ValueError:
+            # No sprite for this team
+            raise ValueError(
+                "Class {} does not have a sprite for team {}!".format(
+                    self.__class__.__name__, self.team))
+        except AttributeError:
+            # No image is loaded
+            return
+        
+        # Rotate the sprite
+        self.image = pygame.transform.rotate(subsurf, self._angle)

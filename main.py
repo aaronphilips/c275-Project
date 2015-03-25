@@ -1,7 +1,7 @@
 __author__ = 'Harley'
 import sys, pygame
 from gui import GUI
-RESOLUTION = pygame.Rect(0, 0, 800, 600)
+RESOLUTION = pygame.Rect(0, 0, 1600, 900)
 BG_COLOR = (32, 32, 32)
 
 main_gui = GUI(RESOLUTION, BG_COLOR)
