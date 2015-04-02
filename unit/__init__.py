@@ -1,5 +1,5 @@
-__author__ = 'Harley'
-all[] = ['melee',
-         'ranged']
 
+__all__ = ['basic_unit',
+           'melee'
+           ]
 unit_type= {}

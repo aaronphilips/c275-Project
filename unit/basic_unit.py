@@ -6,23 +6,23 @@ from pygame.sprite import Sprite
 UNIT_HEIGHT = 50
 UNIT_WIDTH = 50
 
-class BasicUnit(Sprite):
+class BasicUnit(pygame.sprite.Sprite):
     # Need to initialize sprite drawing stuff here
     # Set should correspond to drawing list
-    living = []
-
+    living_units = pygame.sprite.LayeredUpdates()
     def __init__(self,
                  side = -1,
                  screen_x = None,
                  screen_y = UNIT_HEIGHT,
-                 active = False):
+                 activate = False):
         Sprite.__init__(self)
 
         # Setup
         self.side = side
         self.screen_x = screen_x
         self.screen_y = screen_y
-
+        self.type = "basic_unit"
+        self.active = False
 
         # Unit stats:
         self.health = None
@@ -30,20 +30,21 @@ class BasicUnit(Sprite):
         self.attack_speed = None
         self.range = None
         self.image = None
-        self.rect = pygame.Rect(0, 0, SIZE, SIZE)
-        self._update_image()
+        #Temp hardcode for 450
+        self.rect = pygame.Rect(0, 450,UNIT_WIDTH,UNIT_HEIGHT)
+
 
         if activate:
             self.activate()
 
     # Activate or deactivate the unit (for death or spawning)
     def activate(self):
-        if not self._active:
-            self._active = True
-            BasicUnit.living.add(self)
+        if not self.active:
+            self.active = True
+            BasicUnit.living_units.add(self)
     def deactivate(self):
-        self._active = False
-        BasicUnit.living.remove(self)
+        self.active = False
+        BasicUnit.living_units.remove(self)
     def can_attack(self):
         """
         Can the unit attack something? Depends on range, location of
@@ -62,25 +63,5 @@ class BasicUnit(Sprite):
             return "BAM!"
         else:
             return
-    def _update_image(self):
-        """
-        Re-renders the unit's image.
-        """
-        # Pick out the right sprite depending on the team
-        subrect = pygame.Rect(self.team * SIZE,
-                              0,
-                              self.rect.w,
-                              self.rect.h)
-        try:
-            subsurf = self._base_image.subsurface(subrect)
-        except ValueError:
-            # No sprite for this team
-            raise ValueError(
-                "Class {} does not have a sprite for team {}!".format(
-                    self.__class__.__name__, self.team))
-        except AttributeError:
-            # No image is loaded
-            return
+
         
-        # Rotate the sprite
-        self.image = pygame.transform.rotate(subsurf, self._angle)

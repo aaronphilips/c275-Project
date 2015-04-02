@@ -1,23 +1,16 @@
 __author__ = 'Harley'
 import pygame, unit
-from unit import basic_unit
+from unit.basic_unit import BasicUnit
 
-class melee(basic_unit):
+class melee(BasicUnit):
     sprite = pygame.image.load("media/art/melee.png")
 
-    def __init__(self):
-        self._basic_image = melee.sprite
-        super.__init__()
+    def __init__(self,*args,**kwargs):
+        super().__init__(**kwargs)
         self.health = 20
         self.attack_damage = 5
         self.attack_speed = 4
         self.range = 0
-
-
-
-
-
-
-
-
+        self.type = 'melee'
+        self.image = melee.sprite
 unit.unit_type["melee"] = melee
