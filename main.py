@@ -23,9 +23,11 @@ while 1:
         (event.key == pygame.K_q or event.key == pygame.K_ESCAPE)):
             pygame.display.quit()
             sys.exit()
+        # a key spawns a melee unit on the left side
         elif (event.type == pygame.KEYDOWN and
         event.key == pygame.K_a):
             main_gui.activate_melee(0)
+        # l key spawns a melee unit on the right side
         elif (event.type == pygame.KEYDOWN and
         event.key == pygame.K_l):
             main_gui.activate_melee(1)

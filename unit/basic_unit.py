@@ -1,7 +1,6 @@
 __author__ = 'Harley'
 import pygame, unit
 from pygame.sprite import Sprite, Group
-
 # Temp numbers, but should be consistent for all units
 UNIT_HEIGHT = 200
 UNIT_WIDTH = 100
@@ -13,9 +12,10 @@ class BasicUnit(pygame.sprite.Sprite):
     # Set should correspond to drawing list
 
     def __init__(self,
-                 side ,
-                 screen_x ,
-                 screen_y ,
+                 side,
+                 screen_x,
+                 screen_y,
+                 spawn
                  ):
         Sprite.__init__(self)
 
@@ -41,6 +41,7 @@ class BasicUnit(pygame.sprite.Sprite):
 
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
+
 
 
     def can_attack(self):

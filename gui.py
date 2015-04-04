@@ -11,10 +11,10 @@ BIG_FONT_SIZE = 42
 FONT = pygame.font.SysFont("Arial", FONT_SIZE)
 BIG_FONT = pygame.font.SysFont("Arial", BIG_FONT_SIZE)
 BIG_FONT.set_bold(True)
-
+living_units = Group()
 
 class GUI():
-    living_units = Group()
+
     def __init__(self,screen_rect):
         """
         Initialize the display.
@@ -39,12 +39,13 @@ class GUI():
                  side = team,
                  screen_x = 0,
                  #Should be from bottom left corner
-                 screen_y = 450
+                 screen_y = 450,
+                 spawn = True
                  )
-        self.living_units.add(new_melee)
+        living_units.add(new_melee)
     def draw_units(self):
-        for sprites in self.living_units:
+        for sprites in living_units:
             sprites.image.convert()
             sprites.image = pygame.transform.scale(sprites.image,sprites.size)
             # print(sprites.rect)
-        self.living_units.draw(self.screen)
+        living_units.draw(self.screen)
