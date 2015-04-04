@@ -10,8 +10,7 @@ main_gui.load_background("media/art/board.png")
 clock = pygame.time.Clock()
 
 # Set starting units:
-main_gui.activate_melee(1)
-main_gui.activate_melee(0)
+
 
 # The game loop
 while 1:
@@ -24,7 +23,13 @@ while 1:
         (event.key == pygame.K_q or event.key == pygame.K_ESCAPE)):
             pygame.display.quit()
             sys.exit()
-
+        elif (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_a):
+            main_gui.activate_melee(0)
+        elif (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_l):
+            main_gui.activate_melee(1)
+    pygame.display.flip()
     main_gui.draw_units()
 
     clock.tick(60)

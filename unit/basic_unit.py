@@ -3,8 +3,8 @@ import pygame, unit
 from pygame.sprite import Sprite, Group
 
 # Temp numbers, but should be consistent for all units
-UNIT_HEIGHT = 50
-UNIT_WIDTH = 50
+UNIT_HEIGHT = 200
+UNIT_WIDTH = 100
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 450
 
@@ -19,17 +19,18 @@ class BasicUnit(pygame.sprite.Sprite):
                  ):
         Sprite.__init__(self)
 
-        # Setup
+        # Set which side of screen the units spawn at, depending on
+        # which team they're on.
         self.side = side
         if side == 0 :
             self.screen_x = screen_x
         else:
             self.screen_x = SCREEN_WIDTH - UNIT_WIDTH
 
+        # Set constants for all units
         self.screen_y = screen_y-UNIT_HEIGHT
         self.type = "basic_unit"
-        self.active = False
-        self.size = (UNIT_HEIGHT,UNIT_WIDTH)
+        self.size = (UNIT_WIDTH, UNIT_HEIGHT)
 
         # Unit stats:
         self.health = None
@@ -37,21 +38,11 @@ class BasicUnit(pygame.sprite.Sprite):
         self.attack_speed = None
         self.range = None
         self.image = None
-        #Temp hardcode for 450
+
+        # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
 
-        #
-        # if activate:
-        #     self.activate()
 
-    # Activate or deactivate the unit (for death or spawning)
-    # def activate(self):
-    #     if not self.active:
-    #         self.active = True
-    #         BasicUnit.living_units.add(self)
-    # def deactivate(self):
-    #     self.active = False
-    #     BasicUnit.living_units.remove(self)
     def can_attack(self):
         """
         Can the unit attack something? Depends on range, location of

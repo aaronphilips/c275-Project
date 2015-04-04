@@ -46,5 +46,5 @@ class GUI():
         for sprites in self.living_units:
             sprites.image.convert()
             sprites.image = pygame.transform.scale(sprites.image,sprites.size)
-            print(sprites.rect)
+            # print(sprites.rect)
         self.living_units.draw(self.screen)
