@@ -22,9 +22,9 @@ class melee(BasicUnit):
 
         # Unit specific values
         self.health = 20
-        self.attack_damage = 5
+        self.attack_damage = .25
         self.attack_speed = 4
-        self.range = 0
+        self.range = UNIT_WIDTH/2
         self.type = 'melee'
         self.image = melee.sprite
         self.speed = 4
@@ -39,6 +39,8 @@ class melee(BasicUnit):
         self.size = (UNIT_WIDTH, UNIT_HEIGHT)
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
+
+
 
 
 unit.unit_type["melee"] = melee

@@ -15,7 +15,7 @@ class fortress(BasicUnit):
         self.screen_y = None
         self.screen_x = None
         super().__init__(**kwargs)
-        self.health = 100
+        self.health = 10000
         self.attack_damage = 0
         self.attack_speed = 0
         self.range = 0
@@ -31,4 +31,7 @@ class fortress(BasicUnit):
         self.size = (FORTRESS_WIDTH, FORTRESS_HEIGHT)
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,FORTRESS_WIDTH,FORTRESS_HEIGHT)
+    def can_move(self,unit_list):
+        return False
+
 unit.unit_type["fortress"] = fortress
