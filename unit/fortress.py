@@ -1,10 +1,11 @@
 __author__ = 'Harley'
 import pygame, unit
 from unit.basic_unit import BasicUnit
+from res import screen_y,screen_x
 FORTRESS_HEIGHT = 300
 FORTRESS_WIDTH = 200
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 450
+SCREEN_WIDTH = screen_x
+SCREEN_HEIGHT = screen_y
 
 class fortress(BasicUnit):
     sprite = pygame.image.load("media/art/fortress.jpg")

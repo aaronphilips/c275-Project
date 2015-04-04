@@ -1,7 +1,8 @@
 __author__ = 'Harley'
 import sys, pygame
+from res import screen_x,screen_y
 from gui import GUI
-RESOLUTION = pygame.Rect(0, 0, 1200, 450)
+RESOLUTION = pygame.Rect(0, 0,screen_x , screen_y)
 pygame.init()
 
 # Main_gui is an instance of the gui class. Initializes screen size

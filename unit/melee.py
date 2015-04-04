@@ -2,10 +2,11 @@ __author__ = 'Harley'
 import pygame, unit
 from unit.basic_unit import BasicUnit
 from unit.fortress import FORTRESS_HEIGHT, FORTRESS_WIDTH
+from res import screen_y,screen_x
 UNIT_HEIGHT = 200
 UNIT_WIDTH = 100
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 450
+SCREEN_WIDTH = screen_x
+SCREEN_HEIGHT = screen_y
 
 class melee(BasicUnit):
     sprite = pygame.image.load("media/art/melee.png")

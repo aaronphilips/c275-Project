@@ -2,11 +2,12 @@ __author__ = 'Harley'
 import pygame, unit
 from pygame.sprite import Sprite, Group
 from pygame.locals import *
+from res import  screen_x, screen_y
 # Temp numbers, but should be consistent for all units
 
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 450
+SCREEN_WIDTH = screen_x
+SCREEN_HEIGHT = screen_y
 
 
 
@@ -24,7 +25,7 @@ class BasicUnit(pygame.sprite.Sprite):
 
         # Unit stats:
         self.screen_x = 0
-        self.screen_y = 450
+        self.screen_y = screen_y
         self.side = side
 
         self.health = None
