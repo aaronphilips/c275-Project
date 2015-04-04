@@ -33,9 +33,15 @@ while 1:
         elif (event.type == pygame.KEYDOWN and
         event.key == pygame.K_l):
             main_gui.activate_melee(1)
-
+        elif (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_s):
+            main_gui.activate_archer(0)
+        elif (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_k):
+            main_gui.activate_archer(1)
     pygame.display.flip()
     main_gui.update_units()
     main_gui.draw_units()
+    main_gui.draw_HUD()
 
     clock.tick(60)
