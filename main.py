@@ -5,8 +5,8 @@ RESOLUTION = pygame.Rect(0, 0, 800, 450)
 pygame.init()
 
 # Main_gui is an instance of the gui class. Initializes screen size
-main_gui = GUI(RESOLUTION)
-main_gui.load_background("media/art/board.png")
+main_gui = GUI(RESOLUTION,"media/art/board.png")
+main_gui.load_background()
 clock = pygame.time.Clock()
 
 # Set starting units:
@@ -31,7 +31,10 @@ while 1:
         elif (event.type == pygame.KEYDOWN and
         event.key == pygame.K_l):
             main_gui.activate_melee(1)
+
     pygame.display.flip()
+    main_gui.update_units()
+
     main_gui.draw_units()
 
     clock.tick(60)

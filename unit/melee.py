@@ -13,4 +13,5 @@ class melee(BasicUnit):
         self.range = 0
         self.type = 'melee'
         self.image = melee.sprite
+        self.speed = 4
 unit.unit_type["melee"] = melee

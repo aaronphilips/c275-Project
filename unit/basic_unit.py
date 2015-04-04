@@ -1,6 +1,7 @@
 __author__ = 'Harley'
 import pygame, unit
 from pygame.sprite import Sprite, Group
+from pygame.locals import *
 # Temp numbers, but should be consistent for all units
 UNIT_HEIGHT = 200
 UNIT_WIDTH = 100
@@ -38,6 +39,7 @@ class BasicUnit(pygame.sprite.Sprite):
         self.attack_speed = None
         self.range = None
         self.image = None
+        self.speed = None
 
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
@@ -51,11 +53,35 @@ class BasicUnit(pygame.sprite.Sprite):
         should be prioritized over attacking
         Returns a boolean
         """
-    def can_move(self):
+    def can_move(self,living_units):
         """
         Is there a unit in front of me?
         Returns a boolean
         """
+        if len(living_units) == 1:
+            return True
+
+        living_units.remove(self)
+        for sprite in living_units:
+
+            if self.rect.colliderect(sprite.rect):
+                print("Shouldn't move")
+                living_units.add(self)
+                return False
+
+            else:
+                print("Should move")
+                living_units.add(self)
+                return True
+
+    def move(self, living_units):
+        if self.can_move(living_units):
+            if self.side:
+                self.rect.x -=self.speed
+            else:
+                self.rect.x += self.speed
+
+
     def attack(self):
         if self.can_attack():
             # Do damage to appropriate enemy

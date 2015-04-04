@@ -2,7 +2,7 @@ __author__ = 'Harley'
 import sys, pygame, unit
 from unit import *
 from pygame.sprite import Group
-# BLAGAG
+
 
 # Set the fonts
 pygame.font.init()
@@ -15,7 +15,7 @@ living_units = Group()
 
 class GUI():
 
-    def __init__(self,screen_rect):
+    def __init__(self,screen_rect,filestr):
         """
         Initialize the display.
         screen_rect: the bounds of the screen
@@ -24,14 +24,14 @@ class GUI():
         # Set up the screen
         self.screen = pygame.display.set_mode((screen_rect.w, screen_rect.h))
         self.screen_rect = screen_rect
+        self.background = pygame.image.load(filestr).convert()
 
+    def load_background(self):
 
-    def load_background(self,filestr):
-        background = pygame.image.load(filestr).convert()
         #Scale image to match screensize given
-        background =pygame.transform.scale(background,(self.screen_rect.w,self.screen_rect.h))
+        self.background =pygame.transform.scale(self.background,(self.screen_rect.w,self.screen_rect.h))
         #Place image on screen drawing from the top left
-        self.screen.blit(background, [0,0])
+        self.screen.blit(self.background, [0,0])
 
 
     def activate_melee(self,team):
@@ -43,6 +43,10 @@ class GUI():
                  spawn = True
                  )
         living_units.add(new_melee)
+    def update_units(self):
+        living_units.clear(self.screen,self.background)
+        for sprites in living_units:
+            sprites.move(living_units)
     def draw_units(self):
         for sprites in living_units:
             sprites.image.convert()
