@@ -1,7 +1,7 @@
 __author__ = 'Harley'
 import sys, pygame
 from gui import GUI
-RESOLUTION = pygame.Rect(0, 0, 800, 450)
+RESOLUTION = pygame.Rect(0, 0, 1200, 450)
 pygame.init()
 
 # Main_gui is an instance of the gui class. Initializes screen size
@@ -11,7 +11,8 @@ clock = pygame.time.Clock()
 
 # Set starting units:
 
-
+main_gui.activate_fortress(0)
+main_gui.activate_fortress(1)
 # The game loop
 while 1:
     for event in pygame.event.get():
@@ -34,7 +35,6 @@ while 1:
 
     pygame.display.flip()
     main_gui.update_units()
-
     main_gui.draw_units()
 
     clock.tick(60)

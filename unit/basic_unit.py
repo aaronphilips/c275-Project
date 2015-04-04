@@ -3,10 +3,12 @@ import pygame, unit
 from pygame.sprite import Sprite, Group
 from pygame.locals import *
 # Temp numbers, but should be consistent for all units
-UNIT_HEIGHT = 200
-UNIT_WIDTH = 100
-SCREEN_WIDTH = 800
+
+
+SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 450
+
+
 
 class BasicUnit(pygame.sprite.Sprite):
     # Need to initialize sprite drawing stuff here
@@ -14,36 +16,19 @@ class BasicUnit(pygame.sprite.Sprite):
 
     def __init__(self,
                  side,
-                 screen_x,
-                 screen_y,
                  spawn
                  ):
         Sprite.__init__(self)
 
-        # Set which side of screen the units spawn at, depending on
-        # which team they're on.
-        self.side = side
-        if side == 0 :
-            self.screen_x = screen_x
-        else:
-            self.screen_x = SCREEN_WIDTH - UNIT_WIDTH
 
-        # Set constants for all units
-        self.screen_y = screen_y-UNIT_HEIGHT
-        self.type = "basic_unit"
-        self.size = (UNIT_WIDTH, UNIT_HEIGHT)
 
         # Unit stats:
+        self.screen_x = 0
+        self.screen_y = 450
+        self.side = side
+
         self.health = None
-        self.attack_damage = None
-        self.attack_speed = None
-        self.range = None
-        self.image = None
-        self.speed = None
-
-        # Define unit rect for drawing
-        self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
-
+        self.health_image  = None
 
 
     def can_attack(self):
@@ -53,29 +38,22 @@ class BasicUnit(pygame.sprite.Sprite):
         should be prioritized over attacking
         Returns a boolean
         """
-    def can_move(self,living_units):
+    def can_move(self,rect_list):
         """
         Is there a unit in front of me?
         Returns a boolean
         """
-        if len(living_units) == 1:
+
+        if len(self.rect.collidelistall(rect_list))>1:
+            print("Shouldn't move")
+            return False
+
+        else:
+            print("Should move")
             return True
 
-        living_units.remove(self)
-        for sprite in living_units:
-
-            if self.rect.colliderect(sprite.rect):
-                print("Shouldn't move")
-                living_units.add(self)
-                return False
-
-            else:
-                print("Should move")
-                living_units.add(self)
-                return True
-
-    def move(self, living_units):
-        if self.can_move(living_units):
+    def move(self, rect_list):
+        if self.can_move(rect_list):
             if self.side:
                 self.rect.x -=self.speed
             else:
@@ -89,4 +67,15 @@ class BasicUnit(pygame.sprite.Sprite):
         else:
             return
 
-        
+    def draw_health(self):
+        health_image = pygame.font.SysFont("comicsansms",30)
+        health_text = health_image.render(str(self.health),True,(0,255,0))
+         # Move the health to the bottom-right of the image.
+        health_rect = health_text.get_rect()
+        # Draw the health on to the image.
+        self.image.blit(health_text, health_rect)
+
+
+
+
+

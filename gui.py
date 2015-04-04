@@ -4,14 +4,9 @@ from unit import *
 from pygame.sprite import Group
 
 
-# Set the fonts
-pygame.font.init()
-FONT_SIZE = 16
-BIG_FONT_SIZE = 42
-FONT = pygame.font.SysFont("Arial", FONT_SIZE)
-BIG_FONT = pygame.font.SysFont("Arial", BIG_FONT_SIZE)
-BIG_FONT.set_bold(True)
+
 living_units = Group()
+rect_list=[]
 
 class GUI():
 
@@ -37,19 +32,28 @@ class GUI():
     def activate_melee(self,team):
         new_melee = unit.unit_type['melee'](
                  side = team,
-                 screen_x = 0,
-                 #Should be from bottom left corner
-                 screen_y = 450,
                  spawn = True
                  )
-        living_units.add(new_melee)
+        rect_list.append(new_melee.rect)
+        if not len(new_melee.rect.collidelistall(rect_list))>1:
+            living_units.add(new_melee)
+
+    def activate_fortress(self,team):
+        new_fortress = unit.unit_type['fortress'](
+            side = team,
+            spawn = True
+        )
+        rect_list.append(new_fortress.rect)
+
+        living_units.add(new_fortress)
     def update_units(self):
         living_units.clear(self.screen,self.background)
         for sprites in living_units:
-            sprites.move(living_units)
+            sprites.move(rect_list)
     def draw_units(self):
         for sprites in living_units:
             sprites.image.convert()
             sprites.image = pygame.transform.scale(sprites.image,sprites.size)
+            sprites.draw_health()
             # print(sprites.rect)
         living_units.draw(self.screen)

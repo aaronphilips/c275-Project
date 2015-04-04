@@ -1,5 +1,6 @@
 
 __all__ = ['basic_unit',
-           'melee'
+           'melee',
+           'fortress'
            ]
 unit_type= {}
