@@ -1,9 +1,8 @@
 __author__ = 'Harley'
 import sys, pygame, unit
 from unit import *
+from pygame.sprite import Group
 
-# Testing out drawing images to the screen
-from pygame.sprite import LayeredUpdates
 
 # Set the fonts
 pygame.font.init()
@@ -15,7 +14,7 @@ BIG_FONT.set_bold(True)
 
 
 class GUI():
-
+    living_units = Group()
     def __init__(self,screen_rect):
         """
         Initialize the display.
@@ -35,10 +34,17 @@ class GUI():
         self.screen.blit(background, [0,0])
 
 
-    def activate_melee(self):
+    def activate_melee(self,team):
         new_melee = unit.unit_type['melee'](
-                 side = 1,
+                 side = team,
                  screen_x = 0,
                  #Should be from bottom left corner
-                 screen_y = self.screen_rect.h,
-                 activate = False)
+                 screen_y = 450
+                 )
+        self.living_units.add(new_melee)
+    def draw_units(self):
+        for sprites in self.living_units:
+            sprites.image.convert()
+            sprites.image = pygame.transform.scale(sprites.image,sprites.size)
+            print(sprites.rect)
+        self.living_units.draw(self.screen)

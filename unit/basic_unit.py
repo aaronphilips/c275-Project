@@ -1,28 +1,35 @@
 __author__ = 'Harley'
 import pygame, unit
-from pygame.sprite import Sprite
+from pygame.sprite import Sprite, Group
 
 # Temp numbers, but should be consistent for all units
 UNIT_HEIGHT = 50
 UNIT_WIDTH = 50
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 450
 
 class BasicUnit(pygame.sprite.Sprite):
     # Need to initialize sprite drawing stuff here
     # Set should correspond to drawing list
-    living_units = pygame.sprite.LayeredUpdates()
+
     def __init__(self,
-                 side = -1,
-                 screen_x = None,
-                 screen_y = UNIT_HEIGHT,
-                 activate = False):
+                 side ,
+                 screen_x ,
+                 screen_y ,
+                 ):
         Sprite.__init__(self)
 
         # Setup
         self.side = side
-        self.screen_x = screen_x
-        self.screen_y = screen_y
+        if side == 0 :
+            self.screen_x = screen_x
+        else:
+            self.screen_x = SCREEN_WIDTH - UNIT_WIDTH
+
+        self.screen_y = screen_y-UNIT_HEIGHT
         self.type = "basic_unit"
         self.active = False
+        self.size = (UNIT_HEIGHT,UNIT_WIDTH)
 
         # Unit stats:
         self.health = None
@@ -31,20 +38,20 @@ class BasicUnit(pygame.sprite.Sprite):
         self.range = None
         self.image = None
         #Temp hardcode for 450
-        self.rect = pygame.Rect(0, 450,UNIT_WIDTH,UNIT_HEIGHT)
+        self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
 
-
-        if activate:
-            self.activate()
+        #
+        # if activate:
+        #     self.activate()
 
     # Activate or deactivate the unit (for death or spawning)
-    def activate(self):
-        if not self.active:
-            self.active = True
-            BasicUnit.living_units.add(self)
-    def deactivate(self):
-        self.active = False
-        BasicUnit.living_units.remove(self)
+    # def activate(self):
+    #     if not self.active:
+    #         self.active = True
+    #         BasicUnit.living_units.add(self)
+    # def deactivate(self):
+    #     self.active = False
+    #     BasicUnit.living_units.remove(self)
     def can_attack(self):
         """
         Can the unit attack something? Depends on range, location of

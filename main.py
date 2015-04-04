@@ -10,7 +10,8 @@ main_gui.load_background("media/art/board.png")
 clock = pygame.time.Clock()
 
 # Set starting units:
-main_gui.activate_melee()
+main_gui.activate_melee(1)
+main_gui.activate_melee(0)
 
 # The game loop
 while 1:
@@ -23,8 +24,7 @@ while 1:
         (event.key == pygame.K_q or event.key == pygame.K_ESCAPE)):
             pygame.display.quit()
             sys.exit()
+
     main_gui.draw_units()
-    # main_gui.update_everything()
-    # main_gui.activate_crap()
-    # main_gui.draw_unit()
+
     clock.tick(60)
