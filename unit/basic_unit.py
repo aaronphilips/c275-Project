@@ -74,8 +74,8 @@ class BasicUnit(pygame.sprite.Sprite):
         rect_list = []
         for units in unit_list:
             rect_list.append(units.rect)
-        if len(self.rect.collidelistall(rect_list))>1:
 
+        if len(self.rect.collidelistall(rect_list))>1:
             return False
 
         else:
@@ -83,13 +83,16 @@ class BasicUnit(pygame.sprite.Sprite):
             return True
 
     def move(self, unit_list):
-        if self.can_move(unit_list):
+
+        if self.side:
+            self.rect.x -=self.speed
+        else:
+            self.rect.x += self.speed
+        if not self.can_move(unit_list):
             if self.side:
-                self.rect.x -=self.speed
+                self.rect.x +=self.speed
             else:
-                self.rect.x += self.speed
-
-
+                self.rect.x -= self.speed
 
     def attack(self,unit_list):
         can_attack = self.can_attack(unit_list)

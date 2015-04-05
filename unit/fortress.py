@@ -9,7 +9,6 @@ SCREEN_HEIGHT = screen_y
 
 class fortress(BasicUnit):
     sprite = pygame.image.load("media/art/fortress.jpg")
-
     def __init__(self,*args,**kwargs):
         self.side = None
         self.screen_y = None
@@ -23,6 +22,8 @@ class fortress(BasicUnit):
         self.image = fortress.sprite
         self.speed = 0
         side = self.side
+
+
         # Set up screen positioning and unit rect dimensions
         if side == 1:
             self.screen_x = SCREEN_WIDTH - FORTRESS_WIDTH
@@ -31,6 +32,8 @@ class fortress(BasicUnit):
         self.size = (FORTRESS_WIDTH, FORTRESS_HEIGHT)
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,FORTRESS_WIDTH,FORTRESS_HEIGHT)
+
+
     def can_move(self,unit_list):
         return False
 

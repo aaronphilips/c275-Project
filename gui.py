@@ -11,8 +11,8 @@ unit_list=[]
 
 
 class GUI():
-    team_0_cash = 0
-    team_1_cash = 0
+    team_0_cash = 10
+    team_1_cash = 10
     def __init__(self,screen_rect,filestr):
         """
         Initialize the display.
@@ -68,18 +68,19 @@ class GUI():
                 unit_list.remove(sprites)
                 if sprites.side: self.team_0_cash+=20
                 else: self.team_1_cash+=20
-    def render_health(self,unit):
-        health_text = font.render(str(int(unit.health)),1, (255,0,0))
-        health_rect = health_text.get_rect()
-        return health_text,health_rect
+    def render_info(self,info):
+        info_text = font.render(str(int(info)),1, (255,0,0))
+        info_rect = info_text.get_rect()
+        return info_text,info_rect
     def draw_units(self):
         for sprites in living_units:
             sprites.image.convert()
-            if sprites.side:
-                sprites.image = pygame.transform.flip(sprites.image,True,False)
-            else: sprites.image = pygame.transform.scale(sprites.image,sprites.size)
-
-            sprites.image.blit(self.render_health(sprites)[0],self.render_health(sprites)[1])
+            sprites.image = pygame.transform.scale(sprites.image,sprites.size)
+            sprites.image.blit(self.render_info(sprites.health)[0],self.render_info(sprites.health)[1])
         living_units.draw(self.screen)
     def draw_HUD(self):
-        pygame.draw.rect(self.screen, (125,125,125),self.bar_rect)
+        HUD = pygame.Surface((self.bar_rect[2],self.bar_rect[3]))
+        HUD.fill((125,125,125),self.bar_rect)
+        self.screen.blit(HUD,(0,0))
+        self.screen.blit(self.render_info(self.team_0_cash)[0], (0, 0))
+        self.screen.blit(self.render_info(self.team_1_cash)[0], (self.screen_rect.w - 50,0))

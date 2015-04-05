@@ -21,27 +21,32 @@ while 1:
             pygame.display.quit()
             sys.exit()
         # End if q is pressed
-        elif (event.type == pygame.KEYDOWN and
+        if (event.type == pygame.KEYDOWN and
         (event.key == pygame.K_q or event.key == pygame.K_ESCAPE)):
             pygame.display.quit()
             sys.exit()
         # a key spawns a melee unit on the left side
-        elif (event.type == pygame.KEYDOWN and
-        event.key == pygame.K_a):
+        if (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_a and main_gui.team_0_cash>=10):
             main_gui.activate_melee(0)
+            main_gui.team_0_cash -=10
         # l key spawns a melee unit on the right side
-        elif (event.type == pygame.KEYDOWN and
-        event.key == pygame.K_l):
+        if (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_l and main_gui.team_1_cash>=10):
             main_gui.activate_melee(1)
-        elif (event.type == pygame.KEYDOWN and
-        event.key == pygame.K_s):
+            main_gui.team_1_cash -=10
+        if (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_s and main_gui.team_0_cash>=20):
             main_gui.activate_archer(0)
-        elif (event.type == pygame.KEYDOWN and
-        event.key == pygame.K_k):
+            main_gui.team_0_cash -=20
+        if (event.type == pygame.KEYDOWN and
+        event.key == pygame.K_k and main_gui.team_1_cash>=20):
+            print(GUI.team_1_cash)
             main_gui.activate_archer(1)
+            main_gui.team_1_cash -=20
     pygame.display.flip()
     main_gui.update_units()
     main_gui.draw_units()
     main_gui.draw_HUD()
-
+    print(main_gui.team_1_cash,main_gui.team_0_cash)
     clock.tick(60)

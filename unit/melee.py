@@ -10,7 +10,6 @@ SCREEN_HEIGHT = screen_y
 
 class melee(BasicUnit):
     sprite = pygame.image.load("media/art/melee.png")
-
     def __init__(self,*args,**kwargs):
         # These variables will be overwritten by the super init
         self.side = None
@@ -25,10 +24,13 @@ class melee(BasicUnit):
         self.attack_damage = .25
         self.attack_speed = 4
         self.range = UNIT_WIDTH/2
-        self.type = 'melee'
-        self.image = melee.sprite
+        self.image = self.sprite
+        
         self.speed = 4
         side = self.side
+
+
+
 
         # Set up screen positioning and unit rect dimensions
         if side == 1:
@@ -39,7 +41,7 @@ class melee(BasicUnit):
         self.size = (UNIT_WIDTH, UNIT_HEIGHT)
         # Define unit rect for drawing
         self.rect = pygame.Rect(self.screen_x,self.screen_y,UNIT_WIDTH,UNIT_HEIGHT)
-
+        self.type = 'melee'
 
 
 
