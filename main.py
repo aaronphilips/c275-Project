@@ -48,5 +48,6 @@ while 1:
     main_gui.update_units()
     main_gui.draw_units()
     main_gui.draw_HUD()
-    print(main_gui.team_1_cash,main_gui.team_0_cash)
+    # print(main_gui.team_1_cash,main_gui.team_0_cash)
+    print(main_gui.living_units)
     clock.tick(60)

@@ -55,10 +55,10 @@ class BasicUnit(pygame.sprite.Sprite):
 
         # range_rect is current unit's range
         if self.side == 0:
-            range_rect = pygame.Rect(self.rect.right, self.rect.y,self.range,self.rect.h)
+            range_rect = pygame.Rect(self.rect.left, self.rect.y,self.range +self.rect.w,self.rect.h)
             target = range_rect.collidedict(enemies)
         if self.side == 1:
-            range_rect = pygame.Rect(self.rect.left - self.range, self.rect.y, self.range, self.rect.h)
+            range_rect = pygame.Rect(self.rect.left - self.range, self.rect.y, self.range+self.rect.w, self.rect.h)
             target = range_rect.collidedict(enemies)
         if target is not None:
             return target[0]

@@ -5,14 +5,19 @@ from pygame.sprite import Group
 
 pygame.font.init()
 font = pygame.font.Font(None,30)
-living_units = Group()
-unit_list=[]
 
+
+from res import screen_y,screen_x
+UNIT_HEIGHT = 200
+UNIT_WIDTH = 100
+SCREEN_WIDTH = screen_x
+SCREEN_HEIGHT = screen_y
+from unit.fortress import FORTRESS_HEIGHT, FORTRESS_WIDTH
 
 
 class GUI():
-    team_0_cash = 10
-    team_1_cash = 10
+    team_0_cash = 100
+    team_1_cash = 100
     def __init__(self,screen_rect,filestr):
         """
         Initialize the display.
@@ -24,6 +29,8 @@ class GUI():
         self.screen_rect = screen_rect
         self.background = pygame.image.load(filestr).convert()
         self.bar_rect=pygame.Rect(0,0,screen_rect.w,70)
+        self.living_units = Group()
+        self.unit_list=[]
 
     def load_background(self):
         #Scale image to match screensize given
@@ -32,9 +39,19 @@ class GUI():
         self.screen.blit(self.background, [0,0])
 
     def can_spawn(self,unit,unit_list):
-        if not len(unit.rect.collidelistall(unit_list))>0:
-            living_units.add(unit)
-            unit_list.append(unit)
+
+        for units in unit_list:
+            if unit.side==0 and units.side==0:
+                if units.screen_x==FORTRESS_WIDTH:
+                    return
+
+            if unit.side==1 and units.side==1:
+                if units.screen_x==SCREEN_WIDTH - UNIT_WIDTH - FORTRESS_WIDTH:
+                    return
+            
+        # if not len(unit.rect.collidelistall(unit_list))>0:
+        self.living_units.add(unit)
+        self.unit_list.append(unit)
 
     def activate_melee(self,team):
         new_melee = unit.unit_type['melee'](
@@ -42,30 +59,30 @@ class GUI():
                  spawn = True
                  )
 
-        self.can_spawn(new_melee,unit_list)
+        self.can_spawn(new_melee,self.unit_list)
     def activate_archer(self,team):
         new_archer = unit.unit_type['archer'](
                  side = team,
                  spawn = True
                  )
 
-        self.can_spawn(new_archer,unit_list)
+        self.can_spawn(new_archer,self.unit_list)
     def activate_fortress(self,team):
         new_fortress = unit.unit_type['fortress'](
             side = team,
             spawn = True
         )
-        unit_list.append(new_fortress)
-        living_units.add(new_fortress)
+        self.unit_list.append(new_fortress)
+        self.living_units.add(new_fortress)
 
     def update_units(self):
-        living_units.clear(self.screen,self.background)
-        for sprites in living_units:
-            sprites.move(unit_list)
-            sprites.attack(unit_list)
+        self.living_units.clear(self.screen,self.background)
+        for sprites in self.living_units:
+            sprites.move(self.unit_list)
+            sprites.attack(self.unit_list)
             if sprites.die():
-                living_units.remove(sprites)
-                unit_list.remove(sprites)
+                self.living_units.remove(sprites)
+                self.unit_list.remove(sprites)
                 if sprites.side: self.team_0_cash+=20
                 else: self.team_1_cash+=20
     def render_info(self,info):
@@ -73,11 +90,11 @@ class GUI():
         info_rect = info_text.get_rect()
         return info_text,info_rect
     def draw_units(self):
-        for sprites in living_units:
+        for sprites in self.living_units:
             sprites.image.convert()
             sprites.image = pygame.transform.scale(sprites.image,sprites.size)
             sprites.image.blit(self.render_info(sprites.health)[0],self.render_info(sprites.health)[1])
-        living_units.draw(self.screen)
+        self.living_units.draw(self.screen)
     def draw_HUD(self):
         HUD = pygame.Surface((self.bar_rect[2],self.bar_rect[3]))
         HUD.fill((125,125,125),self.bar_rect)
